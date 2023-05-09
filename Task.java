@@ -195,7 +195,7 @@ public class Task{
         float hour = scanner.nextFloat();
 
         // Perform check for if a valid hour was input
-        while(hour < 0)
+        while(hour < 0 || hour > 23)
         {
             System.out.println("Please enter a valid hour. Task duration cannot be negative");
             hour = scanner.nextInt();
