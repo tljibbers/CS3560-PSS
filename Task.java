@@ -2,6 +2,9 @@ import java.util.Scanner;
 
 public class Task{
 
+    public static Scanner scanner = new Scanner(System.in);
+                            // Scanner to read in user input
+
     public float startTime; /*  A start time, rounded to the nearest 15-minutes, 
                                 expressed as a floating point number of a 24 hour clock
                                 Ex: 8:30 AM = 8.5 // 7:45 PM = 19.75 */
@@ -17,7 +20,7 @@ public class Task{
 
     public String taskType;  // Transient, Antitask, or Reoccuring
 
-   
+   // Task constructor with arguements
     public Task(int inputDate, float inputTime, float inputDuration, String inputName, String inputType)
     {
         startTime = inputTime;
@@ -27,107 +30,54 @@ public class Task{
         taskType = inputType;
     }
 
-    public Task create()
-    {
-        int date = dateCreate();
-        float time = startTimeCreate();
-        float duration = durationCreate();
-        String name = nameCreate();
-        String type = typeCreate();
+    // Task with no arguements
+    public Task()
+    {}
 
-        Task task = new Task(date, time, duration, name, type);
-        return task;
+    // Allow a user to view a task by printing its contents
+    public void view()
+    {
+        System.out.println("\nTASK NAME: " + this.name);
+        System.out.println("TASK TYPE: " + this.taskType);
+        System.out.println("DATE: " + this.date);
+        System.out.println("START TIME: " + this.startTime);
+        System.out.println("DURATION: " + this.duration + "hours");
     }
 
-    public void edit()
-    {
-        System.out.println("\nWhat would you like to edit from this task?" 
-                            + "\n1: Date"
-                            + "\n2: Start Time"
-                            + "\n3: Duration"
-                            + "\n4: Name"
-                            + "\nPlease note you cannot change the type. If you desire a differnet task type, please make a new task.\n");
-
-        Scanner scanner = new Scanner(System.in);
-
-        int editChoice = scanner.nextInt();
-
-        while (editChoice > 4 || editChoice < 1)
-        {
-            System.out.println("\nPlease enter a valid choice.\n : ");
-            editChoice = scanner.nextInt();
-        }
-
-        switch(editChoice)
-        {
-            // Change Date
-            case 1:
-            int newDate = this.dateCreate();
-            this.date = newDate;
-            System.out.println("Date changed to: " + this.date);
-            break;
-
-            // Change Start Time
-            case 2:
-            float newTime = this.startTimeCreate();
-            this.startTime = newTime;
-            System.out.println("Start Time changed to: " + this.startTime);
-            break;
-
-            // Change Duration
-            case 3:
-            float newDuration = this.durationCreate();
-            this.duration = newDuration;
-            System.out.println("Duration changed to: " + this.duration);
-            break;
-
-            // Change Name
-            case 4:
-            String newName = this.nameCreate();
-            this.name = newName;
-            System.out.println("Name changed to: " + this.name);
-            break;
-        }
-
-        scanner.close();
-    }
-
-    public void delete(Task task)
-    {
-        task = null;
-    }
-
+    // Create a date for the task and check it is valid
     public int dateCreate()
     {
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("\nPlease enter a date in the format YYYYMMDD" +
-                           "\nEx: April 14, 2020 would be 20200414" +
-                           "\n: ");
+                           "\nEx: April 14, 2020 would be 20200414");
 
         // This string will allow us to perform input validation for correctly inputted year, month, and day.
         String userDate = scanner.nextLine();
 
         int userYear = Integer.parseInt(userDate.substring(0, 4));
-        int userMonth = Integer.parseInt(userDate.substring(5, 6));
-        int userDay = Integer.parseInt(userDate.substring(7, 8));
+        int userMonth = Integer.parseInt(userDate.substring(4, 6));
+        int userDay = Integer.parseInt(userDate.substring(6, 8));
+
+        System.out.println("\nYear: " + userYear);
+        System.out.println("Month: " + userMonth);
+        System.out.println("Day: " + userDay + "\n");
 
 
         // User cannot enter a year beyond 9999 or a year before 0
-        while (userYear > 9999 || userYear < 0);
+        while (userYear > 9999 || userYear < 0)
         {
-            System.out.println("Please enter a valid year. You cannot enter a Task for a year beyond 9999 or a negative date."
+            System.out.println("\nPlease enter a valid year. You cannot enter a Task for a year beyond 9999 or a negative date."
                             + "\nPlease enter a new valid year: ");
 
-            String newYear = scanner.nextLine();
-            userYear = Integer.parseInt(newYear);
+            userYear = Integer.parseInt(scanner.nextLine());
         }
 
         // User cannot enter a month that is either 0 or beyond 12
         while (userMonth > 12 || userMonth == 0)
         {
-            System.out.println("Please enter a valid month. You cannot enter a Task for a month beyond 12 (December) or below 1 (January)."
+            System.out.println("\nPlease enter a valid month. You cannot enter a Task for a month beyond 12 (December) or below 1 (January)."
                             + "\nPlease enter a new valid month: ");
+            userMonth = Integer.parseInt(scanner.nextLine());
         }
 
 
@@ -137,11 +87,12 @@ public class Task{
         {
             case 2:
             // Day-Validation for February
-                while (userDay > 28 || userDay <= 0);
+                while (userDay > 28 || userDay <= 0)
                 {
-                    System.out.println("Please enter a valid day. You cannot enter a Task for a day beyond the 28th on February."
+                    System.out.println("\nPlease enter a valid day. You cannot enter a Task for a day beyond the 28th on February."
                             + "\nNeither can you have a Task on a day that is 0 or below."
                             + "\nPlease enter a new valid day: ");
+                    userDay = Integer.parseInt(scanner.nextLine());
                 }
                 break;
             case 5:
@@ -151,23 +102,24 @@ public class Task{
             // Day-Validation for April, June, September, and November
                 while (userDay > 30 || userDay <= 0)
               {
-                System.out.println("Please enter a valid day. You cannot enter a Task for a day beyond the 30th on a month with 30 days."
+                System.out.println("\nPlease enter a valid day. You cannot enter a Task for a day beyond the 30th on a month with 30 days."
                             + "\nNeither can you have a Task on a day that is 0 or below."
                             + "\nPlease enter a new valid day: ");
+                userDay = Integer.parseInt(scanner.nextLine());
               }
               break;
             default:
               // For any other month...
               while (userDay > 31 || userDay <= 0)
               {
-                System.out.println("Please enter a valid day. You cannot enter a Task for a day beyond the 31st on a month with 31 days."
+                System.out.println("\nPlease enter a valid day. You cannot enter a Task for a day beyond the 31st on a month with 31 days."
                             + "\nNeither can you have a Task on a day that is 0 or below."
                             + "\nPlease enter a new valid day: ");
+                userDay = Integer.parseInt(scanner.nextLine());
               }
               break;
           }
 
-          scanner.close();
 
           // DATE HAS PASSED CHECKS. 
           // Now we concatenate each indiviaul part in case the year, month, or date was changed.
@@ -178,20 +130,17 @@ public class Task{
 
           String finishedDate = yearString + monthString + dayString;
 
-          // Print the date for the task
-          System.out.println("\nYOUR DATE: " + finishedDate);
-
           int returnedDate = Integer.parseInt(finishedDate);
           return returnedDate;
     }
 
+    // Create a start time for the task and check it is valid
     public float startTimeCreate()
     {
-        Scanner scanner = new Scanner(System.in);
-
         System.out.println("\nChoose an hour of the day for the start time of your task using 24-hour time. So between 0 - 23." + 
                             "\nEx: 8 AM = 8 // 7 PM = 19");
-        float hour = scanner.nextFloat();
+        String hourAsString = scanner.nextLine();
+        float hour = Float.parseFloat(hourAsString);
 
         // Perform check for if a valid hour was input
         while(hour < 0 || hour > 23)
@@ -200,12 +149,10 @@ public class Task{
             hour = scanner.nextInt();
         }
 
-        System.out.println("Choose a minute time using 15 minute intervals.");
+        System.out.println("\nChoose a minute time using 15 minute intervals.");
 
-        System.out.println( "1: " + hour + ":00"
-                        + "\n2: " + hour + ":15"
-                        + "\n3: " + hour + ":30"
-                        + "\n4: " + hour + ":45\n : ");
+        System.out.printf("1: %.0f:00\n2: %.0f:15\n3: %.0f:30\n4: %.0f:45\n", hour, hour, hour, hour);
+
 
         int minutesChoice = scanner.nextInt();
 
@@ -235,14 +182,13 @@ public class Task{
             break;
         }
 
-        scanner.close();;
-
         return hour;
     }
 
+    // Create a duration for the task and check it is valid
     public float durationCreate()
     {
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
 
         System.out.println("\nChoose an amount of hours for the duration of your task." + 
                             "\nEx: 8 = 8 hours");
@@ -255,19 +201,16 @@ public class Task{
             hour = scanner.nextInt();
         }
 
-        System.out.println("Choose a minute time using 15 minute intervals.");
+        System.out.println("Choose the amount of minutes for the duruation using 15 minute intervals.");
 
-        System.out.println( "1: " + hour + ":00"
-                        + "\n2: " + hour + ":15"
-                        + "\n3: " + hour + ":30"
-                        + "\n4: " + hour + ":45\n : ");
+        System.out.printf("1: %.0f:00\n2: %.0f:15\n3: %.0f:30\n4: %.0f:45\n", hour, hour, hour, hour);
 
         int minutesChoice = scanner.nextInt();
 
         // Perform check for if a valid choice was made
         while (minutesChoice < 1 || minutesChoice > 4)
         {
-            System.out.println("Please enter a valid selection\n : ");
+            System.out.println("Please enter a valid selection\n");
             minutesChoice = scanner.nextInt();
         }
 
@@ -290,11 +233,10 @@ public class Task{
             break;
         }
 
-        scanner.close();;
-
         return hour;
     }
 
+    // Create a name for the task
     public String nameCreate()
     {
         Scanner scanner = new Scanner(System.in);
@@ -303,11 +245,10 @@ public class Task{
 
         name = scanner.nextLine();
 
-        scanner.close();
-
         return name;
     }
 
+    // Have user select what type of task this will be.
     public String typeCreate()
     {
         Scanner scanner = new Scanner(System.in);
@@ -321,11 +262,9 @@ public class Task{
 
         while (typeChoice < 1 ||  typeChoice > 3)
         {
-            System.out.println("Not a valid selection. Please input a valid choice.\n : ");
+            System.out.println("Not a valid selection. Please input a valid choice.\n");
             typeChoice = scanner.nextInt();
         }
-
-        scanner.close();
 
         String choice = null;
 
