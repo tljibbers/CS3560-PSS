@@ -21,31 +21,41 @@ public class RecurringTask extends Task{
      * frequency     1 = daily, 7 = weekly
      */
     public RecurringTask() {
-        // Inherited attributes //////////////////
-        this.name = nameCreate();
-        this.taskType = typeCreate(); // Polymorphic method
-        this.startTime = startTimeCreate();
-        this.duration = durationCreate();
-
-        // New attributes ///////////////////////
-        this.frequency = frequencyCreate();
         this.startDate = startDateCreate();
         this.endDate = endDateCreate();
+        this.name = nameCreate();
+        this.taskType = typeCreate();
+        this.startTime = startTimeCreate();
+        this.duration = durationCreate();
+        this.frequency = frequencyCreate();
     }
-    // Attribute Methods //////////////////////////////////////////////////
+
+    // Attribute Methods ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public String typeCreate() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nChoose a recurring task type: {\"Class\", \"Study\", \"Sleep\", \"Exercise\", \"Work\", \"Meal\"}");
-        String type = scanner.next();
-        // Recurring task type must be from the list above
-        while (!(taskType.equals("Class") || taskType.equals("Study") || taskType.equals("Sleep") || taskType.equals("Exercise")
-                || taskType.equals("Work") || taskType.equals("Meal"))) {
-            System.out.println("\nInvalid task type. Task type must be a String from the list above.");
-            type = scanner.next();
-        }
-        return type;
-    }
+        String userInput;
+        String[] typeList = {"Class", "Study", "Sleep", "Exercise", "Work", "Meal"};
+        boolean isValid = false;
+        while (true) {
+            System.out.println("Enter type: ");
+            userInput = scanner.nextLine();
+            
+            for (String type : typeList) {
+                if (userInput.equals(type)) {
+                    isValid = true;
+                }
+            }
 
+            if (isValid) {
+                System.out.println("Selected type: " + userInput);
+                break;
+            } else {
+                System.out.println("Invalid type. Try again.");
+            }
+        }
+        return userInput;
+    }
     public int frequencyCreate() {
         System.out.println("\nPlease enter the frequency of the recurring task: 1 (daily), 7 (weekly)");
         int freq = scanner.nextInt();
@@ -59,7 +69,10 @@ public class RecurringTask extends Task{
 
     public int startDateCreate() {
         System.out.println("\nSTART DATE:");
-        return dateCreate();
+        int startDate;
+        startDate = dateCreate();
+
+        return startDate;
         }
 
     public int endDateCreate() {
@@ -68,8 +81,11 @@ public class RecurringTask extends Task{
         // End date must be after the start date
         while (this.startDate >= endDate) {
             System.out.println("\nInvalid endDate. End date cannot be the same or earlier than start date.");
+            System.out.println("END DATE: ");
             endDate = dateCreate();
         }
         return endDate;
     }
+
+
 }
