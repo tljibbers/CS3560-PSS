@@ -12,7 +12,7 @@ public class PSS {
         int menuChoice = 1;
 
         // DO NOT CLOSE A SCANNER THAT USES SYSTEM.IN AS AN UNDERLYING INPUT STREAM
-        // THIS WILL NOT ALLOW ANY FUTURE SCANNERS IN THE SAME PROGRAM TO USE SYTEM.IN
+        // THIS WILL NOT ALLOW ANY FUTURE SCANNERS IN THE SAME PROGRAM TO USE SYSTEM.IN
         Scanner scanner = new Scanner(System.in);
 
         while(menuChoice != 0)
@@ -21,7 +21,7 @@ public class PSS {
                                 "\n0: Exit Program" +
                                 "\n1: Create A Transient Task" +
                                 "\n2: Create An AntiTask" +
-                                "\n3: Create A Reoccuring Task" +
+                                "\n3: Create A Recurring Task" +
                                 "\n4: Edit A Task" + 
                                 "\n5: Delete A Task" +
                                 "\n6: View A Task\n");
@@ -51,9 +51,10 @@ public class PSS {
                 // Insert call to AntiTask constructor here
                 break;
 
-                // Create a Reoccuring Task
+                // Create a Recurring Task
                 case 3:
-                // Insert call to Reoccuring Task constructor here
+                RecurringTask RTask = new RecurringTask();
+                userPSS.schedule.add(RTask);
                 break;
 
                 // Edit a Task
@@ -70,7 +71,7 @@ public class PSS {
                     }
                     else
                     {
-                        System.out.println("\nTask not found. Please note the search is case-sesnitive.");
+                        System.out.println("\nTask not found. Please note the search is case-sensitive.");
                     }
                 }
                 break;
@@ -111,7 +112,7 @@ public class PSS {
                     }
                     else
                     {
-                        System.out.println("\nTask not found. Please note the search is case-sesnitive.");
+                        System.out.println("\nTask not found. Please note the search is case-sensitive.");
                     }
                 }
                 break;
@@ -145,7 +146,7 @@ public class PSS {
                             + "\n2: Start Time"
                             + "\n3: Duration"
                             + "\n4: Name"
-                            + "\nPlease note you cannot change the type. If you desire a differnet task type, please make a new task.\n");
+                            + "\nPlease note you cannot change the type. If you desire a different task type, please make a new task.\n");
 
         int editChoice = scanner.nextInt();
 
@@ -191,11 +192,22 @@ public class PSS {
     // Allow a user to view a task by printing its contents
     public void view(Task task)
     {
-        System.out.println("\nTASK NAME: " + task.name);
+        if (task instanceof RecurringTask) {
+            System.out.println("\nTASK NAME: " + task.name);
+            System.out.println("TASK TYPE: " + task.taskType);
+            System.out.println("START DATE: " + ((RecurringTask) task).startDate);
+            System.out.println("END DATE: " + ((RecurringTask) task).endDate);
+            System.out.println("START TIME: " + task.startTime);
+            System.out.println("DURATION: " + task.duration + " hours");
+            System.out.println("FREQUENCY: " + ((RecurringTask) task).frequency);
+    }
+        else {
+            System.out.println("\nTASK NAME: " + task.name);
         System.out.println("TASK TYPE: " + task.taskType);
         System.out.println("DATE: " + task.date);
         System.out.println("START TIME: " + task.startTime);
-        System.out.println("DURATION: " + task.duration + "hours");
+        System.out.println("DURATION: " + task.duration + " hours");
+        }
     }
 
     public void delete(Task task)
