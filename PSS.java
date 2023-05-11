@@ -48,7 +48,8 @@ public class PSS {
 
                 // Create an AntiTask
                 case 2:
-                // Insert call to AntiTask constructor here
+                AntiTask aTask = new AntiTask();
+                userPSS.schedule.add(aTask);
                 break;
 
                 // Create a Recurring Task
