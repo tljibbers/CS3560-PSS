@@ -219,7 +219,9 @@ public class PSS {
     //Displays the users schedule 
     public void displaySchedule()
     {
-        ;
+        System.out.println("What is the name of the file that you want to display?\n");
+        Scanner scanner = new Scanner(System.in);
+        String fileName = scanner.nextLine();
     }
     
 }
