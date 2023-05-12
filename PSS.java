@@ -221,11 +221,5 @@ public class PSS {
     {
         ;
     }
-
-    //Displays the menu
-    public void displayMenu()
-    {
-        ;
-    }
     
 }
