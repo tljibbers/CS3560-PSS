@@ -215,5 +215,17 @@ public class PSS {
     {
         task = null;
     }
+
+    //Displays the users schedule 
+    public void displaySchedule()
+    {
+        ;
+    }
+
+    //Displays the menu
+    public void displayMenu()
+    {
+        ;
+    }
     
 }
