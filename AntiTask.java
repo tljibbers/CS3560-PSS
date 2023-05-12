@@ -16,10 +16,10 @@ public class AntiTask extends Task {
     // Transient Task constructor with no arguments
     public AntiTask()
     {
-        this.date = this.dateCreate();
-        this.startTime = this.startTimeCreate();
-        this.duration = this.durationCreate();
-        this.name = this.nameCreate();
+        this.date = dateCreate();
+        this.startTime = startTimeCreate();
+        this.duration = durationCreate();
+        this.name = nameCreate();
 
         this.taskType = "Cancellation";
     }
