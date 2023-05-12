@@ -29,6 +29,16 @@ public class RecurringTask extends Task{
         this.duration = durationCreate();
         this.frequency = frequencyCreate();
     }
+    
+    public RecurringTask(int startDate, int endDate, int frequency, float startTime, float duration, String name, String taskType) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.frequency = frequency;
+        this.startTime = startTime;
+        this.duration = duration;
+        this.name = name;
+        this.taskType = taskType;
+    }
 
     // Attribute Methods ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public String typeCreate() {
