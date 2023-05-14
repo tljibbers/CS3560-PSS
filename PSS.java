@@ -1,5 +1,8 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
+//import org.json.simple.JSONObject;
 
 public class PSS {
 
@@ -215,7 +218,39 @@ public class PSS {
     {
         task = null;
     }
+    
+    public void createSchedule(Task task)
+    {
+        //JSONObject jsonObject = new JSONObject();
+        if (task instanceof RecurringTask)
+        {
+            //jsonObject.put("Task Name", task.name);
+            //jsonObject.put("Task Type", task.taskType);
+            //jsonObject.put("Start Date", ((RecurringTask) task).startDate));
+            //jsonObject.put("End Date", ((RecurringTask) task).endDate));
+            //jsonObject.put("Start Time", task.startTime);
+            //jsonObject.put("Duration hours:", task.duration);
+            //jsonobject.put("Frequency:", ((RecurringTask) task).frequency));
 
+        }
+        else
+        {
+            //jsonObject.put("Task Name", task.name);
+            //jsonObject.put("Task Type", task.taskType);
+            //jsonObject.put("Date", task.date);
+            //jsonObject.put("Start Time", task.startTime);
+            //jsonObject.put("Duration hours:", task.duration);      
+        }
+        try {
+            FileWriter file = new FileWriter("C:/schedule.json");
+            //file.write(jsonObject.toJSONString());
+            file.close();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        //System.out.println("Json File made:" + jsonObject);
+    }
     //Displays the users schedule 
     public void displaySchedule()
     {
