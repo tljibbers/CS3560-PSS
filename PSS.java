@@ -310,5 +310,14 @@ public class PSS {
         Scanner scanner = new Scanner(System.in);
         String fileName = scanner.nextLine();
     }
-    
+    // Checkoverlap task
+    public boolean checkOverlap(Task newTask) {
+        for (Task task : schedule) {
+            if (task.overlaps(newTask)) {
+                System.out.println("Task overlap detected: " + task.nameCreate());
+                return true;
+            }
+        }
+        return false;
+    }
 }
