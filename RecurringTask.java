@@ -11,7 +11,26 @@ public class RecurringTask extends Task{
     int frequency;
 
     /**
-     * Constructor of RecurringTask (attributes will come from user input)
+     * Constructor of RecurringTask that include parameters defined by the user.
+     * name          The name of the task
+     * taskType      The type of the task: "Class", "Study", "Sleep", "Exercise", "Work", "Meal"
+     * startTime     The start time of the task from 0 (midnight) to 23.75 (11:45 pm), rounded to the nearest 15 minutes
+     * duration      The duration of the task from 0.25 to 23.75, rounded to the nearest 15 minutes (0.25)
+     * startDate     The start date of the task in YYYYMMDD format
+     * endDate       The end date of the task in YYYYMMDD format
+     * frequency     1 = daily, 7 = weekly
+     */
+    public RecurringTask(int startDate, int endDate, float startTime, float duration, String name, String taskType, int frequency) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.duration = duration;
+        this.name = name;
+        this.taskType = taskType;
+        this.frequency = frequency;
+    }
+    /**
+     * Constructor of RecurringTask (Contains no parameters. All attributes will come from user input and are verified through methods)
      * name          The name of the task
      * taskType      The type of the task: "Class", "Study", "Sleep", "Exercise", "Work", "Meal"
      * startTime     The start time of the task from 0 (midnight) to 23.75 (11:45 pm), rounded to the nearest 15 minutes
@@ -29,18 +48,12 @@ public class RecurringTask extends Task{
         this.duration = durationCreate();
         this.frequency = frequencyCreate();
     }
-    
-    public RecurringTask(int startDate, int endDate, int frequency, float startTime, float duration, String name, String taskType) {
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.frequency = frequency;
-        this.startTime = startTime;
-        this.duration = duration;
-        this.name = name;
-        this.taskType = taskType;
-    }
 
     // Attribute Methods ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Gets the type from user input and verifies that it is a recurring type
+     * @return userInput        The userInput is a recurring type that is a String
+     */
     public String typeCreate() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nChoose a recurring task type: {\"Class\", \"Study\", \"Sleep\", \"Exercise\", \"Work\", \"Meal\"}");
@@ -66,6 +79,10 @@ public class RecurringTask extends Task{
         }
         return userInput;
     }
+    /**
+     * Gets the frequency from user input and verifies that it is 1 or 7
+     * @return freq        The freq is an int that is exclusively 1 (daily) or 7 (weekly)
+     */
     public int frequencyCreate() {
         System.out.println("\nPlease enter the frequency of the recurring task: 1 (daily), 7 (weekly)");
         int freq = scanner.nextInt();
@@ -77,6 +94,10 @@ public class RecurringTask extends Task{
         return freq;
     }
 
+    /**
+     * Gets the start date from user input
+     * @return startDate    The startDate is an int of the form YYYYMMDD that is the start date of the recurring task
+     */
     public int startDateCreate() {
         System.out.println("\nSTART DATE:");
         int startDate;
@@ -85,6 +106,10 @@ public class RecurringTask extends Task{
         return startDate;
         }
 
+    /**
+     * Gets the end date from user input and verifies that it is after the start date
+     * @return endDate      The endDate is an int of the form YYYYMMDD that is the end date of the recurring task
+     */
     public int endDateCreate() {
         System.out.println("\nEND DATE:");
         int endDate = dateCreate();
