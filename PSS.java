@@ -89,7 +89,6 @@ public class PSS {
                     if (task.name.equals(taskToBeDeleted))
                     {
                         userPSS.delete(task);
-                        userPSS.schedule.remove(task);
                         break;
                     }
                     else
@@ -215,7 +214,33 @@ public class PSS {
 
     public void delete(Task task)
     {
-        task = null;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Are you sure you want to delete task, " + task.name + "?"
+                        + "\n1: Yes"
+                        + "\n2: No");
+
+        int deleteChoice = scanner.nextInt();
+
+        while (deleteChoice > 2 || deleteChoice < 1)
+        {
+            System.out.println("\nInvalid choice, please enter a valid choice number (1 or 2).\n");
+            deleteChoice = scanner.nextInt();
+        }
+        switch(deleteChoice)
+        {
+            // Deleting a task
+            case 1:
+                System.out.println("Deleting a task...");
+                schedule.remove(task);
+                System.out.println("Task Deleted!");
+                break;
+            
+            // Changed mind on deleting
+            case 2: 
+                System.out.println("Task deletion canceled.");
+                break;
+        }
+
     }
     
     public void createSchedule(Task task)
