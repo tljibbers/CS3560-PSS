@@ -1,8 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.io.FileWriter;
-import java.io.IOException;
-//import org.json.simple.JSONObject;
+import java.io.File;
+import java.io.PrintWriter;
 
 public class PSS {
 
@@ -221,35 +220,63 @@ public class PSS {
     
     public void createSchedule(Task task)
     {
-        //JSONObject jsonObject = new JSONObject();
-        if (task instanceof RecurringTask)
-        {
-            //jsonObject.put("Task Name", task.name);
-            //jsonObject.put("Task Type", task.taskType);
-            //jsonObject.put("Start Date", ((RecurringTask) task).startDate));
-            //jsonObject.put("End Date", ((RecurringTask) task).endDate));
-            //jsonObject.put("Start Time", task.startTime);
-            //jsonObject.put("Duration hours:", task.duration);
-            //jsonobject.put("Frequency:", ((RecurringTask) task).frequency));
-
-        }
-        else
-        {
-            //jsonObject.put("Task Name", task.name);
-            //jsonObject.put("Task Type", task.taskType);
-            //jsonObject.put("Date", task.date);
-            //jsonObject.put("Start Time", task.startTime);
-            //jsonObject.put("Duration hours:", task.duration);      
-        }
         try {
-            FileWriter file = new FileWriter("C:/schedule.json");
-            //file.write(jsonObject.toJSONString());
-            file.close();
+            PrintWriter pw = new PrintWriter(new File("C:\\"));
+            StringBuilder sb = new StringBuilder();
+
+            if (task instanceof RecurringTask)
+            {
+                sb.append("TASK NAME");
+                sb.append(",");
+                sb.append("TASK TYPE");
+                sb.append(",");
+                sb.append("START DATE");
+                sb.append(",");
+                sb.append("END DATE");
+                sb.append(",");
+                sb.append("START TIME");
+                sb.append(",");
+                sb.append("DURATION (In Hours)");
+                sb.append(",");
+                sb.append("FREQUENCY");
+                sb.append("\n");
+
+                sb.append(task.name);
+                sb.append(task.taskType);
+                sb.append(((RecurringTask) task).startDate);
+                sb.append(((RecurringTask) task).endDate);
+                sb.append(task.startTime);
+                sb.append(task.duration);
+                sb.append(((RecurringTask) task).frequency);
+
+                pw.write(sb.toString());
+                pw.close();
+            }
+            else
+            {
+                sb.append("TASK NAME");
+                sb.append(",");
+                sb.append("TASK TYPE");
+                sb.append(",");
+                sb.append("DATE");
+                sb.append(",");
+                sb.append("START TIME");
+                sb.append(",");
+                sb.append("DURATION (In Hours)");
+                sb.append("\n");
+
+                sb.append(task.name);
+                sb.append(task.taskType);
+                sb.append(task.date);
+                sb.append(task.startTime);
+                sb.append(task.duration);
+
+                pw.write(sb.toString());
+                pw.close();
+            }
         } catch (Exception e) {
             // TODO: handle exception
-            e.printStackTrace();
         }
-        //System.out.println("Json File made:" + jsonObject);
     }
     //Displays the users schedule 
     public void displaySchedule()
