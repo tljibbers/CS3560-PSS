@@ -33,7 +33,12 @@ public class Task{
     // Task with no arguements
     public Task()
     {}
-
+    //checkoverlap
+    public boolean overlaps(Task otherTask) {
+        return (date == otherTask.dateCreate()) && 
+               (startTime < otherTask.startTimeCreate() + otherTask.durationCreate()) && 
+               (otherTask.startTimeCreate() < startTime + duration);
+    }
     // Allow a user to view a task by printing its contents
     public void view()
     {
