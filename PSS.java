@@ -26,11 +26,12 @@ public class PSS {
                                 "\n3: Create A Recurring Task" +
                                 "\n4: Edit A Task" + 
                                 "\n5: Delete A Task" +
-                                "\n6: View A Task\n");
+                                "\n6: View A Task" +
+                                "\n7: Create Schedule File\n");
 
             menuChoice = Integer.parseInt(scanner.nextLine());
 
-            while(menuChoice < 0 ||  menuChoice > 6)
+            while(menuChoice < 0 ||  menuChoice > 7)
             {
                 System.out.println("\nPlease make a valid selection.\n");
                 menuChoice = Integer.parseInt(scanner.nextLine());
@@ -118,6 +119,26 @@ public class PSS {
                     }
                 }
                 break;
+
+                //Create a Schedule File
+                case 7:
+                System.out.println("\nPlease enter the name of the Task you would like to add to a file. \n");
+
+                String tasktoFile = scanner.nextLine();
+
+                for(Task task: userPSS.schedule)
+                {
+                    if(task.name.equals(tasktoFile))
+                    {
+                        //Call the create schedule method for the task
+                        userPSS.createSchedule(task);
+                        break;
+                    }
+                    else
+                    {
+                        System.out.println("\nTask not found. Please note the search is case-sensitive.");
+                    }
+                }
 
             }
 
@@ -246,7 +267,7 @@ public class PSS {
     public void createSchedule(Task task)
     {
         try {
-            PrintWriter pw = new PrintWriter(new File("C:\\"));
+            PrintWriter pw = new PrintWriter(new File("C:\\Users\\Jibbers\\cs3560-pss\\CS3560-PSS\\pssschedule.csv"));
             StringBuilder sb = new StringBuilder();
 
             if (task instanceof RecurringTask)
@@ -304,11 +325,12 @@ public class PSS {
         }
     }
     //Displays the users schedule 
-    public void displaySchedule()
+    public void readSchedule()
     {
-        System.out.println("What is the name of the file that you want to display?\n");
+        System.out.println("What is the name of the file that you want to be read?\n");
         Scanner scanner = new Scanner(System.in);
         String fileName = scanner.nextLine();
+
     }
     // Checkoverlap task
     public boolean checkOverlap(Task newTask) {
