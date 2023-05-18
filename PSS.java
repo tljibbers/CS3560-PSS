@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 
 public class PSS {
@@ -267,7 +268,7 @@ public class PSS {
     public void createSchedule(Task task)
     {
         try {
-            PrintWriter pw = new PrintWriter(new File("C:\\Users\\Jibbers\\cs3560-pss\\CS3560-PSS\\pssschedule.csv"));
+            PrintWriter pw = new PrintWriter(new FileWriter("C:\\Users\\Jibbers\\cs3560-pss\\CS3560-PSS\\pssschedule.csv", true));
             StringBuilder sb = new StringBuilder();
 
             if (task instanceof RecurringTask)
@@ -288,12 +289,19 @@ public class PSS {
                 sb.append("\n");
 
                 sb.append(task.name);
+                sb.append(",");
                 sb.append(task.taskType);
+                sb.append(",");
                 sb.append(((RecurringTask) task).startDate);
+                sb.append(",");
                 sb.append(((RecurringTask) task).endDate);
+                sb.append(",");
                 sb.append(task.startTime);
+                sb.append(",");
                 sb.append(task.duration);
+                sb.append(",");
                 sb.append(((RecurringTask) task).frequency);
+                sb.append("\n");
 
                 pw.write(sb.toString());
                 pw.close();
@@ -312,10 +320,15 @@ public class PSS {
                 sb.append("\n");
 
                 sb.append(task.name);
+                sb.append(",");
                 sb.append(task.taskType);
+                sb.append(",");
                 sb.append(task.date);
+                sb.append(",");
                 sb.append(task.startTime);
+                sb.append(",");
                 sb.append(task.duration);
+                sb.append("\n");
 
                 pw.write(sb.toString());
                 pw.close();
