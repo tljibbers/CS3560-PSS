@@ -337,14 +337,7 @@ public class PSS {
             // TODO: handle exception
         }
     }
-    //Displays the users schedule 
-    public void readSchedule()
-    {
-        System.out.println("What is the name of the file that you want to be read?\n");
-        Scanner scanner = new Scanner(System.in);
-        String fileName = scanner.nextLine();
-
-    }
+    
     // Checkoverlap task
     public boolean checkOverlap(Task newTask) {
         for (Task task : schedule) {
