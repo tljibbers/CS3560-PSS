@@ -49,9 +49,11 @@ public class PSS {
                 TransientTask TTask = new TransientTask();
                     if (userPSS.schedule.isEmpty()) {
                         userPSS.schedule.add(TTask);
+                        break;
                     }
                     if (nameUnique(userPSS.schedule, TTask) && !taskOverlap(userPSS.schedule, TTask)) {
                         userPSS.schedule.add(TTask);
+                        break;
                     }
                     else if (taskOverlap(userPSS.schedule, TTask)){
                         System.out.println("Creating new task introduces overlap. Please create a non-overlapping task");
@@ -265,10 +267,10 @@ public class PSS {
      * @return unique       A boolean that is true if unique, and false if not unique
      */
     public static boolean nameUnique(ArrayList<Task> schedule, Task newTask) {
-        boolean unique = false;
+        boolean unique = true;
         for (Task task : schedule) {
             if (task.name.equals(newTask.name)) {
-                unique = true;
+                unique = false;
             }
         }
         return unique;
