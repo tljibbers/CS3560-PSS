@@ -151,7 +151,7 @@ public class Task{
         while(hour < 0 || hour > 23)
         {
             System.out.println("Please enter a valid hour.");
-            hour = scanner.nextInt();
+            hour = Float.parseFloat(scanner.nextLine());
         }
 
         System.out.println("\nChoose a minute time using 15 minute intervals.");
@@ -159,13 +159,13 @@ public class Task{
         System.out.printf("1: %.0f:00\n2: %.0f:15\n3: %.0f:30\n4: %.0f:45\n", hour, hour, hour, hour);
 
 
-        int minutesChoice = scanner.nextInt();
+        int minutesChoice = Integer.parseInt(scanner.nextLine());
 
         // Perform check for if a valid choice was made
         while (minutesChoice < 1 || minutesChoice > 4)
         {
             System.out.println("Please enter a valid selection\n : ");
-            minutesChoice = scanner.nextInt();
+            minutesChoice = Integer.parseInt(scanner.nextLine());
         }
 
         switch(minutesChoice)
@@ -197,26 +197,26 @@ public class Task{
 
         System.out.println("\nChoose an amount of hours for the duration of your task." + 
                             "\nEx: 8 = 8 hours");
-        float hour = scanner.nextFloat();
+        float hour = Float.parseFloat(scanner.nextLine());
 
         // Perform check for if a valid hour was input
         while(hour < 0 || hour > 23)
         {
             System.out.println("Please enter a valid hour. Task duration cannot be negative");
-            hour = scanner.nextInt();
+            hour = Float.parseFloat(scanner.nextLine());
         }
 
         System.out.println("Choose the amount of minutes for the duruation using 15 minute intervals.");
 
         System.out.printf("1: %.0f:00\n2: %.0f:15\n3: %.0f:30\n4: %.0f:45\n", hour, hour, hour, hour);
 
-        int minutesChoice = scanner.nextInt();
+        int minutesChoice = Integer.parseInt(scanner.nextLine());
 
         // Perform check for if a valid choice was made
         while (minutesChoice < 1 || minutesChoice > 4)
         {
             System.out.println("Please enter a valid selection\n");
-            minutesChoice = scanner.nextInt();
+            minutesChoice = Integer.parseInt(scanner.nextLine());
         }
 
         switch(minutesChoice)
