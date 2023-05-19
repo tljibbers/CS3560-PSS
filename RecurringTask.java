@@ -85,11 +85,11 @@ public class RecurringTask extends Task{
      */
     public int frequencyCreate() {
         System.out.println("\nPlease enter the frequency of the recurring task: 1 (daily), 7 (weekly)");
-        int freq = scanner.nextInt();
+        int freq = Integer.parseInt(scanner.nextLine());
         // Frequency must be 1 or 7
         while (!(freq == 1 || freq == 7)) {
             System.out.println("\nInvalid frequency. Frequency must be 1 or 7.");
-            freq = scanner.nextInt();
+            freq = Integer.parseInt(scanner.nextLine());
         }
         return freq;
     }
