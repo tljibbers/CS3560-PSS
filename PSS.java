@@ -51,7 +51,7 @@ public class PSS {
                         userPSS.schedule.add(TTask);
                         break;
                     }
-                    if (nameUnique(userPSS.schedule, TTask) && !taskOverlap(userPSS.schedule, TTask)) {
+                    else if (nameUnique(userPSS.schedule, TTask) && !taskOverlap(userPSS.schedule, TTask)) {
                         userPSS.schedule.add(TTask);
                         break;
                     }
@@ -69,9 +69,11 @@ public class PSS {
                 AntiTask aTask = new AntiTask();
                     if (userPSS.schedule.isEmpty()) {
                         userPSS.schedule.add(aTask);
+                        break;
                     }
-                    if (nameUnique(userPSS.schedule, aTask) && !taskOverlap(userPSS.schedule, aTask)) {
+                    else if (nameUnique(userPSS.schedule, aTask) && !taskOverlap(userPSS.schedule, aTask)) {
                         userPSS.schedule.add(aTask);
+                        break;
                     }
                     else if (taskOverlap(userPSS.schedule, aTask)){
                         System.out.println("Creating new task introduces overlap. Please create a non-overlapping task");
@@ -87,9 +89,11 @@ public class PSS {
                 RecurringTask RTask = new RecurringTask();
                    if (userPSS.schedule.isEmpty()) {
                         userPSS.schedule.add(RTask);
+                       break;
                    }
-                   if (nameUnique(userPSS.schedule, RTask) && !taskOverlap(userPSS.schedule, RTask)) {
+                   else if (nameUnique(userPSS.schedule, RTask) && !taskOverlap(userPSS.schedule, RTask)) {
                         userPSS.schedule.add(RTask);
+                       break;
                     }
                     else if (taskOverlap(userPSS.schedule, RTask)){
                         System.out.println("Creating new task introduces overlap. Please create a non-overlapping task");
@@ -239,6 +243,51 @@ public class PSS {
             currentDate = currentDate + rTask.frequency;
         }
         return false; // No overlap
+    }
+    
+     /**
+     * Increments the date and wraps the days/months/years accordingly. Does not account for leap years
+     * @param date              The date of the task
+     * @param increment         The amount of days added
+     * @return updatedIntDate   The new date after increment
+     */
+    public static int updateDate(int date, int increment) {
+        int year = date / 10000;
+        int month = (date % 10000) / 100;
+        int day = date % 100;
+
+        // Perform the date calculations
+        day += increment;
+        month += (day - 1) / 30;
+        day = (day - 1) % 30 + 1;
+        year += (month - 1) / 12;
+        month = (month - 1) % 12 + 1;
+
+        // Wrap the date if it goes beyond the valid range
+        if (increment == 7) {
+            while (day < 1 || day > 7) {
+                if (day < 1) {
+                    day += 7;
+                    month--;
+                } else {
+                    day -= 7;
+                    month++;
+                }
+
+                if (month < 1) {
+                    month = 12;
+                    year--;
+                } else if (month > 12) {
+                    month = 1;
+                    year++;
+                }
+            }
+        }
+
+        // Convert the updated date back to the integer format
+        int updatedIntDate = year * 10000 + month * 100 + day;
+
+        return updatedIntDate;
     }
 
     /**
