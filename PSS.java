@@ -47,20 +47,36 @@ public class PSS {
                 // Create a Transient Task
                 case 1:
                 TransientTask TTask = new TransientTask();
-                userPSS.schedule.add(TTask);
-                break;
+                    if (nameUnique(userPSS.schedule, TTask)) {
+                        userPSS.schedule.add(TTask);
+
+                    }
+                    else {
+                        System.out.println("Name of task is not unique. Please create a task with a unique name.");
+                        break;
+                    }
 
                 // Create an AntiTask
                 case 2:
                 AntiTask aTask = new AntiTask();
-                userPSS.schedule.add(aTask);
-                break;
+                    if (nameUnique(userPSS.schedule, aTask)) {
+                        userPSS.schedule.add(aTask);
+                    }
+                    else {
+                        System.out.println("Name of task is not unique. Please create a task with a unique name.");
+                        break;
+                    }
 
                 // Create a Recurring Task
                 case 3:
                 RecurringTask RTask = new RecurringTask();
-                userPSS.schedule.add(RTask);
-                break;
+                    if (nameUnique(userPSS.schedule, RTask)) {
+                        userPSS.schedule.add(RTask);
+                    }
+                    else {
+                        System.out.println("Name of task is not unique. Please create a task with a unique name.");
+                        break;
+                    }
 
                 // Edit a Task
                 case 4:
@@ -160,7 +176,21 @@ public class PSS {
         return task;
     }
 
-    
+     /**
+     * Checks if the name of the new task is unique to the tasks in the schedule
+     * @param schedule      A list of tasks
+     * @param newTask       The new task created by the user
+     * @return unique       A boolean that is true if unique, and false if not unique
+     */
+    public static boolean nameUnique(ArrayList<Task> schedule, Task newTask) {
+        boolean unique = false;
+        for (Task task : schedule) {
+            if (task.name.equals(newTask.name)) {
+                unique = true;
+            }
+        }
+        return unique;
+    }
 
     public void edit(Task task)
     {
