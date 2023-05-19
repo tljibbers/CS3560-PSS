@@ -240,7 +240,7 @@ public class PSS {
             if (checkSingleTaskOverlap(singleTask, newTask)) {
                 return true; // Tasks overlap
             }
-            currentDate = currentDate + rTask.frequency;
+            currentDate = updateDate(currentDate, rTask.frequency);
         }
         return false; // No overlap
     }
