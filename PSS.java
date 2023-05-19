@@ -47,11 +47,17 @@ public class PSS {
                 // Create a Transient Task
                 case 1:
                 TransientTask TTask = new TransientTask();
-                    if (nameUnique(userPSS.schedule, TTask)) {
+                    if (userPSS.schedule.isEmpty()) {
                         userPSS.schedule.add(TTask);
-
                     }
-                    else {
+                    if (nameUnique(userPSS.schedule, TTask) && !taskOverlap(userPSS.schedule, TTask)) {
+                        userPSS.schedule.add(TTask);
+                    }
+                    else if (taskOverlap(userPSS.schedule, TTask)){
+                        System.out.println("Creating new task introduces overlap. Please create a non-overlapping task");
+                        break;
+                    }
+                    else if (!nameUnique(userPSS.schedule, TTask)) {
                         System.out.println("Name of task is not unique. Please create a task with a unique name.");
                         break;
                     }
@@ -59,10 +65,17 @@ public class PSS {
                 // Create an AntiTask
                 case 2:
                 AntiTask aTask = new AntiTask();
-                    if (nameUnique(userPSS.schedule, aTask)) {
+                    if (userPSS.schedule.isEmpty()) {
                         userPSS.schedule.add(aTask);
                     }
-                    else {
+                    if (nameUnique(userPSS.schedule, aTask) && !taskOverlap(userPSS.schedule, aTask)) {
+                        userPSS.schedule.add(aTask);
+                    }
+                    else if (taskOverlap(userPSS.schedule, aTask)){
+                        System.out.println("Creating new task introduces overlap. Please create a non-overlapping task");
+                        break;
+                    }
+                    else if (!nameUnique(userPSS.schedule, aTask)) {
                         System.out.println("Name of task is not unique. Please create a task with a unique name.");
                         break;
                     }
@@ -70,10 +83,17 @@ public class PSS {
                 // Create a Recurring Task
                 case 3:
                 RecurringTask RTask = new RecurringTask();
-                    if (nameUnique(userPSS.schedule, RTask)) {
+                   if (userPSS.schedule.isEmpty()) {
+                        userPSS.schedule.add(RTask);
+                   }
+                   if (nameUnique(userPSS.schedule, RTask) && !taskOverlap(userPSS.schedule, RTask)) {
                         userPSS.schedule.add(RTask);
                     }
-                    else {
+                    else if (taskOverlap(userPSS.schedule, RTask)){
+                        System.out.println("Creating new task introduces overlap. Please create a non-overlapping task");
+                        break;
+                    }
+                    else if (!nameUnique(userPSS.schedule, RTask)) {
                         System.out.println("Name of task is not unique. Please create a task with a unique name.");
                         break;
                     }
@@ -176,6 +196,68 @@ public class PSS {
         return task;
     }
 
+     /**
+     * Checks if there is task overlap in the schedule given a new task
+     * @param schedule          A list of tasks
+     * @param newTask           The new task being created by user
+     * @return boolean          True if there is task overlap, false if no overlap              
+     */
+    public static boolean taskOverlap(ArrayList<Task> schedule, Task newTask) {
+        for (Task task : schedule) {
+            // Check RecurringTaskObjects
+            if (task instanceof RecurringTask) {
+                if (checkRecurringTaskOverlap((RecurringTask) task, newTask)) {
+                    return true; // Task overlaps with recurring instance
+                }
+            }
+            else if (checkSingleTaskOverlap(task, newTask)) {
+                return true; // Task overlaps with single task
+            }
+        }
+        return false; // No overlap found
+    }
+    // Helper methods to taskOverlap ///////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Checks for overlap in a recurring task given a new task
+     * @param rTask             The recurring task
+     * @param newTask           The new task being created by user
+     * @return boolean          True if there is task overlap, false if no overlap
+     */
+    public static boolean checkRecurringTaskOverlap(RecurringTask rTask, Task newTask) {
+        // Initialize attributes for a single recurring task instance
+        int currentDate = rTask.startDate;
+        String name = rTask.name;
+        String type = rTask.taskType;
+        // Loop through all recurring task instances
+        while (currentDate <= rTask.endDate) {
+            Task singleTask = new Task(currentDate, rTask.startTime, rTask.duration, name, type);
+            if (checkSingleTaskOverlap(singleTask, newTask)) {
+                return true; // Tasks overlap
+            }
+            currentDate = currentDate + rTask.frequency;
+        }
+        return false; // No overlap
+    }
+
+    /**
+     * Checks for overlap in a single task given a new task
+     * @param task              The task being checked
+     * @param newTask           The new task being created by user
+     * @return boolean          True if there is task overlap, false if no overlap
+     */
+    public static boolean checkSingleTaskOverlap(Task task, Task newTask) {
+        // Both occur same day
+        if (task.date == newTask.date) {
+            float taskEndTime = task.startTime + task.duration;
+            float newTaskEndTime = newTask.startTime + newTask.duration;
+            if (taskEndTime > newTask.startTime && task.startTime < newTaskEndTime) {
+                return true; // Tasks overlap
+            }
+        }
+        return false; // No overlap
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
      /**
      * Checks if the name of the new task is unique to the tasks in the schedule
      * @param schedule      A list of tasks
