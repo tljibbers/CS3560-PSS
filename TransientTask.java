@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class TransientTask extends Task{
 
     // Inherits attributes startTime, date, duration, name, and taskType
